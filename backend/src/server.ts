@@ -1,25 +1,34 @@
-import express, { Request, Response } from 'express';
-import dotenv from 'dotenv';
-import authRoutes from './routes/authRoutes';
-import userRoutes from './routes/userRoutes';
+import PinoHttp from "pino-http";
+import cors from "cors";
+import express from "express";
+import bodyParser from "body-parser";
+import path from "path";
 
-dotenv.config(); // Load environment variables from .env file
+export const logger = PinoHttp({
+  transport: {
+    level: "debug",
+    target: "pino-pretty",
+    options: {
+      destination: 2,
+      all: true,
+      translateTime: true,
+    }
+  },
+});
 
 const app = express();
-const port = process.env.PORT || 3000;
 
-app.use(express.json());
+app.use(cors());
+app.use(logger);
 
-// Health check route
-app.get('/', (req: Request, res: Response) => {
-  res.send('API InfraAlert está rodando!');
-});
+app.use(bodyParser.json());
+app.use(express.urlencoded({ extended: false }));
 
-// API routes
-app.use('/api/auth', authRoutes);
-app.use('/api/users', userRoutes); // Mount user routes (needs admin protection)
+app.listen(3000, () => {
+  console.clear()
+  console.log("Servidor da API está rondando na porta http://localhost:3000\n")
+})
 
-app.listen(port, () => {
-  console.log(`Servidor rodando na porta ${port}`);
-});
+app.get("/", ((req, res) => { return res.json({ message: "Seja bem vindo ao INFRAALERT" }) }))
 
+export default app;
