@@ -1,0 +1,43 @@
+{
+  "expo": {
+    "name": "InfraAlert",
+    "slug": "infraalert",
+    "version": "1.0.0",
+    "platforms": [
+      "android",
+      "ios",
+      "web"
+    ],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "orientation": "portrait",
+    "icon": "./assets/images/logoInfraAlert.png",
+    "splash": {
+      "image": "./assets/images/logoInfraAlert.png",
+      "resizeMode": "contain"
+    },
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.yourusername.infraalert", 
+      "config": {
+        "googleMapsApiKey": "AIzaSyDUDPsaGDen1k_-1-drjyUWq7207dmmGek" 
+      }
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png", 
+        "backgroundColor": "#FFFFFF"
+      },
+      "package": "com.yourusername.infraalert", 
+      "config": {
+        "googleMaps": {
+          "apiKey": "AIzaSyDUDPsaGDen1k_-1-drjyUWq7207dmmGek" 
+        }
+      }
+    },
+    "web": {
+      "favicon": "./assets/assets/logoInfraAlert.png"
+    }
+  }
+}
