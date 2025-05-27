@@ -13,7 +13,7 @@ const Loading = ({ navigation }) => {
         useNativeDriver: true,
       }).start(() => {
 
-        navigation.replace('Home');
+        navigation.replace('Login');
       });
     }, 2000); // fecha o método e coloca o tempo
 

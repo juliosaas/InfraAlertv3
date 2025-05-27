@@ -12,7 +12,7 @@ import { useNavigation } from '@react-navigation/native';
 import axios from 'axios'; // Import axios
 
 // Define the API base URL - Use the exposed URL
-const API_URL = 'http://localhost:3000/api';
+const API_URL = 'http://localhost:3000';
 
 export default function Login() {
   const navigation = useNavigation();
@@ -28,7 +28,7 @@ export default function Login() {
 
     setLoading(true);
     try {
-      const response = await axios.post(`${API_URL}/auth/login`, {
+      const response = await axios.post(`${API_URL}/user/auth/login`, {
         email,
         password,
       });

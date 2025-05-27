@@ -13,13 +13,13 @@ import { useNavigation } from '@react-navigation/native';
 import axios from 'axios';
 
 //URL base da API
-const API_URL = 'http://localhost:3000/api';
+const API_URL = 'http://localhost:3000';
 
 export default function Cadastro() {
   const navigation = useNavigation(); // hook de navegação entre telas
 
   //estados dos campos do formulário
-  const [name, setName] = useState('');
+  const [nome, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -27,7 +27,7 @@ export default function Cadastro() {
 
   const handleRegister = async () => {
     //verifica se todos os campos foram preenchidos
-    if (!name || !email || !password || !confirmPassword) {
+    if (!nome || !email || !password || !confirmPassword) {
       Alert.alert('Erro', 'Por favor, preencha todos os campos.');
       return;
     }
@@ -42,10 +42,10 @@ export default function Cadastro() {
 
     try {
       // requisição POST para registrar novo usuário
-      const response = await axios.post(`${API_URL}/auth/register`, {
-        name,
+      const response = await axios.post(`${API_URL}/user/auth/register`, {
+        nome,
         email,
-        password,
+        senha: password,
       });
 
       // sucesso no cadastro
@@ -75,7 +75,7 @@ export default function Cadastro() {
             style={styles.input}
             placeholder="Digite seu nome"
             placeholderTextColor="#999"
-            value={name}
+            value={nome}
             onChangeText={setName}
           />
 
