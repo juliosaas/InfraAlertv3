@@ -82,7 +82,6 @@ npx prisma generate
 ```bash
 npx prisma migrate dev
 ```
-
 ---
 
 ## 📲 Configuração do Front-end

@@ -12,9 +12,9 @@
       "**/*"
     ],
     "orientation": "portrait",
-    "icon": "./assets/images/logoInfraAlert.png",
+    "icon": "./assets/img/logoInfraAlert.png",
     "splash": {
-      "image": "./assets/images/logoInfraAlert.png",
+      "image": "./assets/img/logoInfraAlert.png",
       "resizeMode": "contain"
     },
     "ios": {

@@ -3,6 +3,7 @@ import { View, Text, TextInput, StyleSheet, Animated, TouchableOpacity } from 'r
 import MapView from 'react-native-maps';
 import { FontAwesome } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 export default function Home() {
   const [favoritado, setFavoritado] = useState(false);
@@ -20,63 +21,66 @@ export default function Home() {
   }, []);
 
   const searchLocation = (query) => {
-    console.log(`Buscando localização: ${query}`);
-    // Aqui você pode implementar a busca real
+    console.log(`Buscando localização: ${query}`); // isso vai ser substituído por uma chamada a API de geolocalização
   };
 
   return (
-    <View style={{ flex: 1 }}>
-      <MapView
-        style={{ flex: 1 }}
-        initialRegion={{
-          latitude: -22.9064,
-          longitude: -47.0616,
-          latitudeDelta: 0.01,
-          longitudeDelta: 0.01,
-        }}
-      />
-      <Animated.View style={[styles.container, { opacity: fadeAnim }]}>
-        <TouchableOpacity
-          onPress={() => setFavoritado(!favoritado)}
-          style={styles.starTouchable}
-          hitSlop={{ top: 5, bottom: 5, left: 5, right: 5 }}
-        >
-          <FontAwesome
-            name="star"
-            size={28}
-            color={favoritado ? '#FFD700' : 'white'}
-          />
-        </TouchableOpacity>
-
-        <Text style={styles.title}>Para onde vamos?</Text>
-
-        <TextInput
-          style={styles.input}
-          placeholder="Local de partida..."
-          placeholderTextColor="#999"
-          value={partida}
-          onChangeText={setPartida}
-          onSubmitEditing={() => searchLocation(partida)}
+    <SafeAreaView style={{ flex: 1 }}>
+      <View style={{ flex: 1 }}>
+        <MapView
+          style={{ flex: 1 }}
+          initialRegion={{
+            latitude: -22.9064,
+            longitude: -47.0616,
+            latitudeDelta: 0.01,
+            longitudeDelta: 0.01,
+          }}
         />
-        <TextInput
-          style={styles.input}
-          placeholder="Seu destino..."
-          placeholderTextColor="#999"
-          value={destino}
-          onChangeText={setDestino}
-          onSubmitEditing={() => searchLocation(destino)}
-        />
-
-        <Text style={styles.footerText}>
-          Deseja favoritar lugares e salvar suas preferências?{' '}
-          <TouchableOpacity onPress={() => navigation.navigate('Login')}>
-            <Text style={styles.login}>login</Text>
+        <Animated.View style={[styles.container, { opacity: fadeAnim }]}>
+          <TouchableOpacity
+            onPress={() => setFavoritado(!favoritado)}
+            style={styles.starTouchable}
+            hitSlop={{ top: 5, bottom: 5, left: 5, right: 5 }}
+          >
+            <FontAwesome
+              name="star"
+              size={28}
+              color={favoritado ? '#FFD700' : 'white'}
+            />
           </TouchableOpacity>
-        </Text>
-      </Animated.View>
-    </View>
+
+          <Text style={styles.title}>Para onde vamos?</Text>
+
+          <TextInput
+            style={styles.input}
+            placeholder="Local de partida..."
+            placeholderTextColor="#999"
+            value={partida}
+            onChangeText={setPartida}
+            onSubmitEditing={() => searchLocation(partida)} // faz com que a busca seja feita ao pressionar Enter //(nao funfa ainca))
+          />
+          <TextInput
+            style={styles.input}
+            placeholder="Seu destino..."
+            placeholderTextColor="#999"
+            value={destino}
+            onChangeText={setDestino}
+            onSubmitEditing={() => searchLocation(destino)} 
+          />
+
+          <Text style={styles.footerText}>
+            Deseja favoritar lugares e salvar suas preferências?{' '}
+            <TouchableOpacity onPress={() => navigation.navigate('Login')}>
+              <Text style={styles.login}>login</Text>
+            </TouchableOpacity>
+          </Text>
+        </Animated.View>
+      </View>
+    </SafeAreaView>
   );
 }
+
+// barra interativa e estilizada na parte inferior da tela
 
 const styles = StyleSheet.create({
   container: {
