@@ -1,4 +1,3 @@
-
 # InfraAlert - Guia de Configuração e Execução
 
 ## 🧭 Introdução
@@ -126,6 +125,28 @@ Nos arquivos `AdminScreen.js`, `Cadastro.js`, `Login.js`, altere a constante `AP
 
 Use `ipconfig` (Windows) ou `ifconfig/ip addr` (Mac/Linux) para descobrir seu IP local.
 
+### 📦 Dependências do Front-end
+
+O projeto utiliza as seguintes bibliotecas principais (instaladas automaticamente com `npm install`):
+
+- [React Native](https://reactnative.dev/)
+- [Expo](https://expo.dev/)
+- [React Navigation](https://reactnavigation.org/) (`@react-navigation/native`, `@react-navigation/stack`)
+- [React Native Gesture Handler](https://docs.swmansion.com/react-native-gesture-handler/)
+- [React Native Reanimated](https://docs.swmansion.com/react-native-reanimated/)
+- [React Native Maps](https://github.com/react-native-maps/react-native-maps)
+- [React Native Vector Icons](https://github.com/oblador/react-native-vector-icons)
+- [@gorhom/bottom-sheet](https://gorhom.github.io/react-native-bottom-sheet/)
+- [Axios](https://axios-http.com/)
+- [react-native-web](https://necolas.github.io/react-native-web/) (para rodar no navegador)
+
+Se precisar instalar alguma dependência manualmente, utilize:
+
+```bash
+npx expo install react-native-maps react-native-reanimated react-native-gesture-handler @react-navigation/native @react-navigation/stack @gorhom/bottom-sheet react-native-vector-icons
+npm install axios
+```
+
 ---
 
 ## 🚀 Executando o Projeto
@@ -196,4 +217,4 @@ Verifique cuidadosamente as configurações de ambiente, a conexão entre front 
 ---
 
 InfraAlert © 2025  
-Desenvolvido por Júlio César Dourado  
+Desenvolvido por Júlio César Dourado

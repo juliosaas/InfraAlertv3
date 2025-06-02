@@ -22,6 +22,9 @@
       "bundleIdentifier": "com.yourusername.infraalert", 
       "config": {
         "googleMapsApiKey": "AIzaSyDUDPsaGDen1k_-1-drjyUWq7207dmmGek" 
+      },
+      "infoPlist": {
+        "NSLocationWhenInUseUsageDescription": "Este app precisa de acesso à sua localização."
       }
     },
     "android": {
@@ -34,7 +37,8 @@
         "googleMaps": {
           "apiKey": "AIzaSyDUDPsaGDen1k_-1-drjyUWq7207dmmGek" 
         }
-      }
+      },
+      "permissions": ["ACCESS_FINE_LOCATION", "ACCESS_COARSE_LOCATION"]
     },
     "web": {
       "favicon": "./assets/assets/logoInfraAlert.png"

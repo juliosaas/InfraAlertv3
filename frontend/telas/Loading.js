@@ -13,7 +13,7 @@ const Loading = ({ navigation }) => {
         useNativeDriver: true,
       }).start(() => {
 
-        navigation.replace('Login');
+        navigation.replace('Home'); // substitui a tela atual por 'Home' após a animação
       });
     }, 2000); // fecha o método e coloca o tempo
 
@@ -23,7 +23,7 @@ const Loading = ({ navigation }) => {
   return (
     <Animated.View style={[styles.container, { opacity: fadeAnim }]}>
       <Image 
-        source={require('../assets/images/logoInfraAlert.png')} 
+        source={require('../assets/img/logoInfraAlert.png')} 
         style={styles.logo} 
       />
     </Animated.View>
