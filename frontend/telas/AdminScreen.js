@@ -66,7 +66,7 @@ export default function AdminScreen() {
   }, []);
 
   //função pra apagar usuário com confirmação
-  const handleDeleteUser = (userId) => {
+  const handleDeleteUser = (id) => {
     Alert.alert(
       'Confirmar Exclusão',
       'Tem certeza que deseja excluir este usuário?',
@@ -79,7 +79,7 @@ export default function AdminScreen() {
             try {
               const token = await getAuthToken();
               //headers com token iriam aqui se fosse preciso
-              await axios.delete(`${API_URL}/users/${userId}`);
+              await axios.delete(`${API_URL}/users/${id}`);
               Alert.alert('Sucesso', 'Usuário excluído.');
               fetchUsers();
             } catch (error) {
