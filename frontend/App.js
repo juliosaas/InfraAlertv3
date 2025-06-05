@@ -8,8 +8,6 @@ import Home from './telas/Home';
 
 const Stack = createStackNavigator();
 
-export const API_URL = process.env.NGROK_URL ?? 'http://localhost:3000';
-
 export default function App() {
   return (
     <NavigationContainer>
