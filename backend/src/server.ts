@@ -1,5 +1,4 @@
 import PinoHttp from "pino-http";
-import ngrok from "@ngrok/ngrok";
 import cors from "cors";
 import express from "express";
 import bodyParser from "body-parser";
@@ -83,12 +82,6 @@ app.listen(3000, async () => {
 
 
 app.get("/", ((req, res) => { return res.json({ message: "Seja bem vindo ao INFRAALERT" }) }))
-
-ngrok
-  .connect({ addr: PORT, authtoken_from_env: true })
-  .then((listener) =>
-    logger.logger.info(`Ingress established at: ${listener.url()}`)
-  );
 
 server.listen(PORT, () => {
   logger.logger.info(`Server running at http://${HOST}:${PORT}`);
