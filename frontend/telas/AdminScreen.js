@@ -15,9 +15,7 @@ import {
 import axios from 'axios';
 import { FontAwesome } from '@expo/vector-icons';
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
-
-//url do backend
-const API_URL = 'http://localhost:3000';
+import { API_URL } from '../config';
 
 //função que simula recuperar um token (não tá feita ainda)
 const getAuthToken = async () => {
@@ -31,9 +29,13 @@ export default function AdminScreen() {
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
+  const [addModalVisible, setAddModalVisible] = useState(false);
   const [selectedUser, setSelectedUser] = useState(null);
   const [editName, setEditName] = useState('');
   const [editEmail, setEditEmail] = useState(''); //pra editar o email depois se quiser
+  const [newName, setNewName] = useState('');
+  const [newEmail, setNewEmail] = useState('');
+  const [newPassword, setNewPassword] = useState('');
 
   //carrega os usuários do backend
   const fetchUsers = async () => {
@@ -122,6 +124,28 @@ export default function AdminScreen() {
     }
   };
 
+  // Função para adicionar usuário
+  const handleAddUser = async () => {
+    if (!newName || !newEmail || !newPassword) {
+      Alert.alert('Erro', 'Preencha todos os campos para adicionar um usuário.');
+      return;
+    }
+    try {
+      await axios.post(`${API_URL}/user/auth/register`, {
+        nome: newName,
+        email: newEmail,
+        senha: newPassword,
+      });
+      Alert.alert('Sucesso', 'Usuário adicionado!');
+      setAddModalVisible(false);
+      setNewName(''); setNewEmail(''); setNewPassword('');
+      fetchUsers();
+    } catch (error) {
+      const msg = error.response?.data?.message || 'Erro ao adicionar usuário.';
+      Alert.alert('Erro', msg);
+    }
+  };
+
   //renderiza cada usuário da lista
   const renderUserItem = ({ item }) => (
     <View style={styles.userItem}>
@@ -150,6 +174,10 @@ export default function AdminScreen() {
   return (
     <View style={styles.container}>
       <Text style={styles.header}>Administração de Usuários</Text>
+      <TouchableOpacity style={styles.addButton} onPress={() => setAddModalVisible(true)}>
+        <FontAwesome name="plus" size={18} color="#fff" />
+        <Text style={styles.addButtonText}>Adicionar Usuário</Text>
+      </TouchableOpacity>
       <FlatList
         data={users}
         renderItem={renderUserItem}
@@ -159,7 +187,45 @@ export default function AdminScreen() {
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} colors={["#19549C"]} />
         }
       />
-
+      {/* Modal para adicionar usuário */}
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={addModalVisible}
+        onRequestClose={() => setAddModalVisible(false)}
+      >
+        <View style={styles.centeredView}>
+          <View style={styles.modalView}>
+            <Text style={styles.modalText}>Adicionar Usuário</Text>
+            <TextInput
+              style={styles.modalInput}
+              placeholder="Nome"
+              value={newName}
+              onChangeText={setNewName}
+            />
+            <TextInput
+              style={styles.modalInput}
+              placeholder="Email"
+              value={newEmail}
+              onChangeText={setNewEmail}
+              keyboardType="email-address"
+              autoCapitalize="none"
+            />
+            <TextInput
+              style={styles.modalInput}
+              placeholder="Senha"
+              value={newPassword}
+              onChangeText={setNewPassword}
+              secureTextEntry
+              autoCapitalize="none"
+            />
+            <View style={styles.modalButtons}>
+              <Button title="Cancelar" onPress={() => setAddModalVisible(false)} color="#888" />
+              <Button title="Adicionar" onPress={handleAddUser} color="#19549C" />
+            </View>
+          </View>
+        </View>
+      </Modal>
       {/*modal pra editar*/}
       <Modal
         animationType="slide"
@@ -301,5 +367,22 @@ const styles = StyleSheet.create({
       justifyContent: 'space-around',
       width: '100%',
       marginTop: 10,
+  },
+  addButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#19549C',
+    paddingVertical: 10,
+    paddingHorizontal: 18,
+    borderRadius: 20,
+    alignSelf: 'center',
+    marginBottom: 15,
+    marginTop: 5,
+  },
+  addButtonText: {
+    color: '#fff',
+    fontWeight: 'bold',
+    marginLeft: 8,
+    fontSize: 16,
   }
 });

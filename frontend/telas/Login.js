@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import {
   View,
   Text,
@@ -10,12 +10,12 @@ import {
 import { FontAwesome } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import axios from 'axios'; // Import axios
-
-// Define the API base URL - Use the exposed URL
-const API_URL = 'http://localhost:3000';
+import { UserContext } from '../App'; // Import UserContext
+import { API_URL } from '../config';
 
 export default function Login() {
   const navigation = useNavigation();
+  const { setUser } = useContext(UserContext); // Get setUser from context
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
@@ -36,6 +36,7 @@ export default function Login() {
       // Handle successful login
       console.log('Login successful:', response.data);
       const { token, user } = response.data;
+      setUser(user); // Salva usuário no contexto
 
       // TODO: Store the token securely (e.g., AsyncStorage)
       // For now, just log it and navigate

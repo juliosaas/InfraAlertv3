@@ -11,9 +11,7 @@ import {
 import { FontAwesome } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import axios from 'axios';
-
-//URL base da API
-const API_URL = 'http://localhost:3000';
+import { API_URL } from '../config';
 
 export default function Cadastro() {
   const navigation = useNavigation(); // hook de navegação entre telas

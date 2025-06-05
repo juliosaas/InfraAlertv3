@@ -26,27 +26,28 @@ const userController = {
 
       return res.json({ message: "usuario criado", user });
     } catch (error) {
-      return res.json({ message: "deu ruim, não criou" });
+      console.error('ERRO DETALHADO:', error);
+      return res.status(500).json({ message: String(error) });
     }
   },
   auth: async (req: Request, res: Response) => {
     const { email, password } = req.body;
 
     try {
-      const user = await prisma.user.findUnique({
+      // Corrigido: findFirst para múltiplos campos
+      const user = await prisma.user.findFirst({
         where: {
           email: email,
-          AND: {
-            password: password,
-          },
+          password: password,
         },
       });
 
-      if (!user) return res.status(404).json("usuario não encontrado");
+      if (!user) return res.status(404).json({ message: "usuario não encontrado" });
 
       return res.json({ message: "usuario encontrado", user });
     } catch (error) {
-      return res.status(500).json("erro no servidor");
+      console.error('ERRO DETALHADO:', error);
+      return res.status(500).json({ message: String(error) });
     }
   },
   deleteUser: async (req: Request, res: Response) => {
@@ -63,7 +64,8 @@ const userController = {
 
       return res.json({ message: "usuario deletado", user });
     } catch (error) {
-      return res.status(500).json({ message: "erro ao deletar usuario" });
+      console.error('ERRO DETALHADO:', error);
+      return res.status(500).json({ message: String(error) });
     }
 
   },
@@ -86,7 +88,8 @@ const userController = {
 
       return res.json({ message: "usuario atualizado", user });
     } catch (error) {
-      return res.status(500).json({ message: "erro ao atualizar usuario" });
+      console.error('ERRO DETALHADO:', error);
+      return res.status(500).json({ message: String(error) });
     }
   },
 };

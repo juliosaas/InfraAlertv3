@@ -1,9 +1,10 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useContext } from 'react';
 import { View, Text, TextInput, StyleSheet, Animated, TouchableOpacity } from 'react-native';
 import MapView from 'react-native-maps';
 import { FontAwesome } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { UserContext } from '../App';
 
 export default function Home() {
   const [favoritado, setFavoritado] = useState(false);
@@ -11,6 +12,7 @@ export default function Home() {
   const [destino, setDestino] = useState('');
   const navigation = useNavigation();
   const fadeAnim = useRef(new Animated.Value(0)).current;
+  const { user } = useContext(UserContext);
 
   useEffect(() => {
     Animated.timing(fadeAnim, {
@@ -36,6 +38,15 @@ export default function Home() {
             longitudeDelta: 0.01,
           }}
         />
+        {/* Botão admin flutuante */}
+        {user && user.role === 'ADMIN' && (
+          <TouchableOpacity
+            style={styles.adminButton}
+            onPress={() => navigation.navigate('Admin')}
+          >
+            <Text style={styles.adminButtonText}>admin</Text>
+          </TouchableOpacity>
+        )}
         <Animated.View style={[styles.container, { opacity: fadeAnim }]}>
           <TouchableOpacity
             onPress={() => setFavoritado(!favoritado)}
@@ -118,5 +129,22 @@ const styles = StyleSheet.create({
     color: 'white',
     textDecorationLine: 'underline',
     fontWeight: 'bold',
+  },
+  adminButton: {
+    position: 'absolute',
+    top: 40,
+    right: 20,
+    backgroundColor: '#19549C',
+    paddingVertical: 8,
+    paddingHorizontal: 18,
+    borderRadius: 20,
+    zIndex: 10,
+    elevation: 10,
+  },
+  adminButtonText: {
+    color: 'white',
+    fontWeight: 'bold',
+    fontSize: 16,
+    textTransform: 'uppercase',
   },
 });
